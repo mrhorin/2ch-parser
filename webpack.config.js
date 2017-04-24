@@ -7,16 +7,23 @@ module.exports = {
   entry: {
     'index': './src/js/index.js'
   },
+  target: 'node',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
+    libraryTarget: 'commonjs2'
   },
   resolve: {
-    modules: [ path.resolve('./src/') ],
+    modules: [ 'node_modules', path.resolve('./src/'),  ],
     extensions: ['.js'],
   },
+  externals: [
+    'sync-request',
+    'iconv-lite',
+    'jschardet',
+  ],
   plugins: [
-    new WebpackNotifierPlugin()
+    new WebpackNotifierPlugin(),
   ],
   module: {
     loaders: [
