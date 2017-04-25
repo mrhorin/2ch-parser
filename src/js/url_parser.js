@@ -12,7 +12,8 @@ module.exports = class UrlParser{
     if(UrlParser.isShitaraba(threadUrl)){
       return threadUrl.replace(/read.cgi/, "rawmode.cgi")
     }else{
-
+      let url = threadUrl.split("/")
+      return `${url[0]}/\/${url[2]}/${url[5]}/dat/${url[6]}.dat`
     }
   }
 
