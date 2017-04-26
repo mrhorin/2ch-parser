@@ -1,39 +1,41 @@
 import request from 'sync-request'
 
 import UrlParser from 'js/url_parser'
+import PostParser from 'js/post_parser'
 import Decoder from 'js/decoder'
 
 // スレ
 module.exports = class Thread{
 
-  constructor(url){
+  constructor(title, url){
+    this.title = title
     this.url = url
-    this.title = ""
+    this.datUrl = UrlParser.getDatUrl(this.url)
     this.headers = {
       lastMofied: "",
       contentLength: 0,
     }
-    this.posts = this.allRes
+    this.posts = []
   }
 
   // 全レスを取得
-  get allRes(){
+  fetchAllPosts(){
     let res = request('GET', this.datUrl, { timeout: 15000 })
     if(res.statusCode==200){
       // レスポンスヘッダ保存
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength = Number(res.headers['content-length'])
-      // UTF-8に変換
+      // datをパース
       let dat = Decoder.convert(res.body)
-      this.posts = dat
-      return dat
+      this.posts = PostParser.parseDat(dat, this.url)
+      return this.posts
     }else{
       throw new Error(`Status Code is ${res.statusCode} in response header`)
     }
   }
 
   // 新着レスを取得
-  get newRes(){
+  fetchNewPosts(){
     let res = request('GET', this.datUrl, {
       'timeout': 15000,
       'headers': {
@@ -45,21 +47,17 @@ module.exports = class Thread{
       // レスポンスヘッダ保存
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength += Number(res.headers['content-length'])
-      // UTF-8に変換
+      // datをパース
       let dat = Decoder.convert(res.body)
-      this.posts += dat
-      return dat
+      let newPosts = PostParser.parseDat(dat, this.url)
+      this.posts = this.posts.concat(newPosts)
+      return newPosts
     }else if(res.statusCode==304){
       // 新着レスなし
       return null
     }else{
       throw new Error(`Status Code is ${res.statusCode} in response header`)
     }
-  }
-
-  // datファイルのURLを取得
-  get datUrl(){
-    return UrlParser.getDatUrl(this.url)
   }
 
 }

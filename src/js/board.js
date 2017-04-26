@@ -10,13 +10,15 @@ module.exports = class Board{
 
   constructor(url){
     this.url = url
+    this.subjectUrl = UrlParser.getSubjectUrl(this.url)
+    this.threads = []
   }
 
   // スレッド一覧
-  get threads(){
+  fetchThreads(){
     let res = request('GET', this.subjectUrl, { timeout: 15000 })
     let subject = Decoder.convert(res.body)
-    return subject.split('\n').filter((line, index, self)=>{
+    let threads = subject.split('\n').filter((line, index, self)=>{
       // 重複行を削除
       return (self.indexOf(line) === index)
     }).map((th)=>{
@@ -26,20 +28,13 @@ module.exports = class Board{
       }else{
         th = th.split('<>')
       }
-      return {
-        name: th[1],
-        key: th[0],
-        url: UrlParser.getThreadUrl(this.url, th[0])
-      }
+      return new Thread(th[1], UrlParser.getThreadUrl(this.url, th[0]))
     }).filter((thread)=>{
       // URLが空のスレッドを排除
-      return (thread.key)
+      return (thread.url)
     })
-  }
-
-  // subject.txtのURL
-  get subjectUrl(){
-    return UrlParser.getSubjectUrl(this.url)
+    this.threads = threads
+    return threads
   }
 
 }
