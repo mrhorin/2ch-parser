@@ -43,8 +43,8 @@ module.exports = class Thread{
         'Range': `bytes=${this.headers.contentLength}-`
       }
     })
-    console.log(res.statusCode)
-    if(res.statusCode==206 || res.statusCode==200){
+    // Partial Contentが返ってきたとき
+    if(res.statusCode==206){
       // レスポンスヘッダ保存
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength += Number(res.headers['content-length'])
