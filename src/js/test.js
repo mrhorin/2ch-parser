@@ -1,11 +1,4 @@
-module.exports = class Test{
+import Board from 'js/board'
+import Thread from 'js/thread'
 
-  constructor(hoge){
-    this.hoge = hoge
-  }
-
-  get fuga(){
-    return this.hoge + " is kawaii :D"
-  }
-
-}
+console.log("test")
