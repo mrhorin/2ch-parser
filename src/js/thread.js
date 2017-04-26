@@ -25,9 +25,7 @@ module.exports = class Thread{
       // レスポンスヘッダ保存
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength = Number(res.headers['content-length'])
-      // datをパース
-      let dat = Decoder.convert(res.body)
-      this.posts = PostParser.parseDat(dat, this.url)
+      this.posts = PostParser.parseDat(res.body, this.url)
       return this.posts
     }else{
       throw new Error(`Status Code is ${res.statusCode} in response header`)
@@ -43,13 +41,12 @@ module.exports = class Thread{
         'Range': `bytes=${this.headers.contentLength}-`
       }
     })
+    console.log(res.statusCode)
     if(res.statusCode==206 || res.statusCode==200){
       // レスポンスヘッダ保存
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength += Number(res.headers['content-length'])
-      // datをパース
-      let dat = Decoder.convert(res.body)
-      let newPosts = PostParser.parseDat(dat, this.url)
+      let newPosts = PostParser.parseDat(res.body, this.url)
       this.posts = this.posts.concat(newPosts)
       return newPosts
     }else if(res.statusCode==304){
