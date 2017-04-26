@@ -35,7 +35,38 @@ module.exports = class Thread{
 
   // 新着レスを取得
   fetchNewPosts(){
-    // Rangeリクエスト
+    if(UrlParser.isShitaraba(this.url)){
+      return this._fetchNewPostsFromShitaraba()
+    }else{
+      return this._fetchNewPostsByRange()
+    }
+  }
+
+  // 新着レスを取得(したらば用)
+  _fetchNewPostsFromShitaraba(){
+    let reqUrl = this.datUrl
+    // 最後のレス番+1からレス取得するURL
+    if(this.posts.length>0){
+      reqUrl = `${reqUrl}/${this.posts[this.posts.length-1].no + 1}-n`
+    }
+    let res = request('GET', reqUrl, { 'timeout': 15000 })
+    if(res.statusCode==200 && res.body.byteLength>0){
+      this.headers.lastMofied = res.headers['last-modified']
+      this.headers.contentLength += Number(res.headers['content-length'])
+      let newPosts = PostParser.parseDat(res.body, this.url)
+      this.posts = this.posts.concat(newPosts)
+      this._setPostsNo()
+      return newPosts
+    }else if(res.statusCode==304 || res.body.byteLength<1){
+      // 新着レスなし
+      return null
+    }else{
+      throw new Error(`Status Code is ${res.statusCode} in response header.`)
+    }
+  }
+
+  // 新着レスを取得(Rangeリクエスト用)
+  _fetchNewPostsByRange(){
     let res = request('GET', this.datUrl, {
       'timeout': 15000,
       'headers': {
@@ -45,7 +76,6 @@ module.exports = class Thread{
     })
     // Partial Contentが返ってきたとき
     if(res.statusCode==206){
-      // レスポンスヘッダ保存
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength += Number(res.headers['content-length'])
       let newPosts = PostParser.parseDat(res.body, this.url)
