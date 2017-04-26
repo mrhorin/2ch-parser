@@ -26,6 +26,7 @@ module.exports = class Thread{
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength = Number(res.headers['content-length'])
       this.posts = PostParser.parseDat(res.body, this.url)
+      this._setPostsNo()
       return this.posts
     }else{
       throw new Error(`Status Code is ${res.statusCode} in response header`)
@@ -34,6 +35,7 @@ module.exports = class Thread{
 
   // 新着レスを取得
   fetchNewPosts(){
+    // Rangeリクエスト
     let res = request('GET', this.datUrl, {
       'timeout': 15000,
       'headers': {
@@ -48,12 +50,23 @@ module.exports = class Thread{
       this.headers.contentLength += Number(res.headers['content-length'])
       let newPosts = PostParser.parseDat(res.body, this.url)
       this.posts = this.posts.concat(newPosts)
+      this._setPostsNo()
       return newPosts
     }else if(res.statusCode==304){
       // 新着レスなし
       return null
     }else{
-      throw new Error(`Status Code is ${res.statusCode} in response header`)
+      throw new Error(`Status Code is ${res.statusCode} in response header.`)
+    }
+  }
+
+  // レス番を付与
+  _setPostsNo(){
+    if(!UrlParser.isShitaraba(this.url)){
+      this.posts = this.posts.map((post, index)=>{
+        post.no = index
+        return post
+      })
     }
   }
 
