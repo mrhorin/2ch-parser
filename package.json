@@ -1,13 +1,14 @@
 {
   "name": "2ch-parser",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.js",
+  "version": "0.0.1",
+  "description": "This module is parser for 2ch which is most famous BBS in Japan.",
+  "main": "./lib/index.js",
   "scripts": {
-    "test": "node ./dist/test.js",
-    "watch": "webpack --watch"
+    "test": "node ./lib/test.js",
+    "watch": "webpack --watch",
+    "build": "webpack"
   },
-  "author": "",
+  "author": "mrhorin <u0813mb@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.24.0",
