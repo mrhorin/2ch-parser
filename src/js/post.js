@@ -8,6 +8,7 @@ module.exports = class Post{
     this.date = hash.date
     this.body = hash.body
     this.id = hash.id
+    this.title = hash.title
   }
 
 }

@@ -28,7 +28,7 @@ module.exports = class Board{
       }else{
         th = th.split('<>')
       }
-      return new Thread(th[1], UrlParser.getThreadUrl(this.url, th[0]))
+      return new Thread(UrlParser.getThreadUrl(this.url, th[0]), th[1])
     }).filter((thread)=>{
       // URLが空のスレッドを排除
       return (thread.url)

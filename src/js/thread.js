@@ -7,7 +7,7 @@ import Decoder from 'js/decoder'
 // スレ
 module.exports = class Thread{
 
-  constructor(title, url){
+  constructor(url, title=""){
     this.title = title
     this.url = url
     this.datUrl = UrlParser.getDatUrl(this.url)
@@ -27,6 +27,7 @@ module.exports = class Thread{
       this.headers.contentLength = Number(res.headers['content-length'])
       this.posts = PostParser.parseDat(res.body, this.url)
       this._setPostsNo()
+      this._setTitle()
       return this.posts
     }else{
       throw new Error(`Status Code is ${res.statusCode} in response header`)
@@ -56,6 +57,7 @@ module.exports = class Thread{
       let newPosts = PostParser.parseDat(res.body, this.url)
       this.posts = this.posts.concat(newPosts)
       this._setPostsNo()
+      this._setTitle()
       return newPosts
     }else if(res.statusCode==304 || res.body.byteLength<1){
       // 新着レスなし
@@ -81,6 +83,7 @@ module.exports = class Thread{
       let newPosts = PostParser.parseDat(res.body, this.url)
       this.posts = this.posts.concat(newPosts)
       this._setPostsNo()
+      this._setTitle()
       return newPosts
     }else if(res.statusCode==304){
       // 新着レスなし
@@ -98,6 +101,11 @@ module.exports = class Thread{
         return post
       })
     }
+  }
+
+  // スレッド名をセット
+  _setTitle(){
+    if(this.posts.length>0) this.title = this.posts[0].title
   }
 
 }
