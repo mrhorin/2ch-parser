@@ -7,6 +7,7 @@ module.exports = class Post{
     this.mail = hash.mail
     this.date = hash.date
     this.body = hash.body
+    this.id = hash.id
   }
 
 }

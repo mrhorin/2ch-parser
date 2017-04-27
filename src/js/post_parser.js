@@ -29,14 +29,18 @@ module.exports = class PostParser{
         name: line[1],
         mail: line[2],
         date: line[3],
-        body: line[4]
+        body: line[4],
+        title: line[5],
+        id: line[6]
       })
     }else{
       return new Post({
         name: line[0],
         mail: line[1],
-        date: line[2],
-        body: line[3]
+        date: line[2].replace(/\sID:.+/, ""),
+        body: line[3],
+        title: line[4],
+        id: line[2].match(/ID:.+/)[0].replace(/^ID:/, "")
       })
     }
   }
