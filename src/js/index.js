@@ -3,6 +3,6 @@ import Thread from 'js/thread'
 
 module.exports = Board
 
-module.exports.board = Board
+module.exports.Board = Board
 
-module.exports.thread = Thread
+module.exports.Thread = Thread

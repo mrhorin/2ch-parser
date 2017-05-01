@@ -16,7 +16,7 @@ npm install 2ch-parser
 ## Usage
 If you want to get threads list from board URL, it insert into Board object, then return threads array.
 ```javascript
-const Board = require('2ch-parser').board
+import {Board} from '2ch-parser'
 
 var tech = new Board("http://toro.2ch.sc/tech/")
 var threads = tech.fetchThreads()
@@ -24,7 +24,7 @@ var threads = tech.fetchThreads()
 
 If you want to get posts list from thread URL, it insert into Thread object, then return posts array.
 ```javascript
-const Thread = require('2ch-parser').thread
+import {Thread} from '2ch-parser'
 
 var bbs = new Thread("http://toro.2ch.sc/test/read.cgi/tech/9990000001/")
 var posts = bbs.fetchAllPosts()
@@ -32,13 +32,12 @@ var posts = bbs.fetchAllPosts()
 
 If you want to also get new arrived posts after get posts in Thread, you should use fetchNewPosts function.
 ```javascript
-const Thread = require('2ch-parser').thread
+import {Thread} from '2ch-parser'
 
 var bbs = new Thread("http://toro.2ch.sc/test/read.cgi/tech/9990000001/")
 var posts = bbs.fetchAllPosts()
 
 var newPosts = bbs.fetchNewPosts()
-
 ```
 
 ## License
