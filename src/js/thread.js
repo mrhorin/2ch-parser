@@ -21,16 +21,18 @@ module.exports = class Thread{
   // 全レスを取得
   fetchAllPosts(){
     let res = request('GET', this.datUrl, { timeout: 15000 })
+    res.url = this.datUrl
     if(res.statusCode==200){
       // レスポンスヘッダ保存
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength = Number(res.headers['content-length'])
-      this.posts = PostParser.parseDat(res.body, this.url)
+      this.posts = res.body = PostParser.parseDat(res.body, this.url)
       this._setPostsNo()
       this._setTitle()
-      return this.posts
+      return res
     }else{
-      throw new Error(`Status Code is ${res.statusCode} in response header`)
+      res.body = []
+      return res
     }
   }
 
@@ -51,19 +53,19 @@ module.exports = class Thread{
       reqUrl = `${reqUrl}/${this.posts[this.posts.length-1].no + 1}-n`
     }
     let res = request('GET', reqUrl, { 'timeout': 15000 })
+    res.url = reqUrl
     if(res.statusCode==200 && res.body.byteLength>0){
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength += Number(res.headers['content-length'])
-      let newPosts = PostParser.parseDat(res.body, this.url)
-      this.posts = this.posts.concat(newPosts)
+      res.body = PostParser.parseDat(res.body, this.url)
+      this.posts = this.posts.concat(res.body)
       this._setPostsNo()
       this._setTitle()
-      return newPosts
-    }else if(res.statusCode==304 || res.body.byteLength<1){
-      // 新着レスなし
-      return null
+      return res
     }else{
-      throw new Error(`Status Code is ${res.statusCode} in response header.`)
+      // 新着レスなし
+      res.body = []
+      return res
     }
   }
 
@@ -76,20 +78,20 @@ module.exports = class Thread{
         'Range': `bytes=${this.headers.contentLength}-`
       }
     })
+    res.url = this.datUrl
     // Partial Contentが返ってきたとき
     if(res.statusCode==206){
       this.headers.lastMofied = res.headers['last-modified']
       this.headers.contentLength += Number(res.headers['content-length'])
-      let newPosts = PostParser.parseDat(res.body, this.url)
-      this.posts = this.posts.concat(newPosts)
+      res.body = PostParser.parseDat(res.body, this.url)
+      this.posts = this.posts.concat(res.body)
       this._setPostsNo()
       this._setTitle()
-      return newPosts
-    }else if(res.statusCode==304){
-      // 新着レスなし
-      return null
+      return res
     }else{
-      throw new Error(`Status Code is ${res.statusCode} in response header.`)
+      // 新着レスなし
+      res.body = []
+      return res
     }
   }
 
