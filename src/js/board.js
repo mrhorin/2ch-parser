@@ -19,6 +19,7 @@ module.exports = class Board{
     let res = request('GET', this.subjectUrl, { timeout: 15000 })
     res.url = this.subjectUrl
     if(res.statusCode>=300){
+      res.body = []
       return res
     }else{
       let subject = Decoder.convert(res.body)
