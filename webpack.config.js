@@ -19,7 +19,7 @@ module.exports = {
     extensions: ['.js'],
   },
   externals: [
-    'sync-request',
+    'then-request',
     'iconv-lite',
     'jschardet',
   ],

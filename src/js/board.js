@@ -1,4 +1,4 @@
-import request from 'sync-request'
+import request from 'then-request'
 
 import UrlParser from 'js/url_parser'
 import Decoder from 'js/decoder'
@@ -14,34 +14,45 @@ module.exports = class Board{
     this.threads = []
   }
 
-  // スレッド一覧
-  fetchThreads(){
-    let res = request('GET', this.subjectUrl, { timeout: 15000 })
-    res.url = this.subjectUrl
-    if(res.statusCode>=300){
-      res.body = []
-      return res
-    }else{
-      let subject = Decoder.convert(res.body)
-      let threads = subject.split('\n').filter((line, index, self)=>{
-        // 重複行を削除
-        return (self.indexOf(line) === index)
-      }).map((th)=>{
-        if(!th[1]) return false
-        if(UrlParser.isShitaraba(this.url)){
-          th = th.split(',')
-        }else{
-          th = th.split('<>')
-        }
-        return new Thread(UrlParser.getThreadUrl(this.url, th[0]), th[1])
-      }).filter((thread)=>{
-        // URLが空のスレッドを排除
-        return (thread.url)
-      })
-      res.body = this.threads = threads
-      return res
-    }
+  // スレッド一覧を取得
+  fetchThreads(callback=()=>{}){
+    this.threadsPromise.then((res)=>{
+      callback(res)
+    }).catch((res)=>{
+      callback(res)
+    })
+  }
 
+  // スレッド一覧を取得するプロミスを返す
+  get threadsPromise(){
+    return new Promise((resolve, reject)=>{
+      request('GET', this.subjectUrl, { timeout: 15000 }).done((res)=>{
+        res.url = this.subjectUrl
+        if(res.statusCode>=300){
+          res.body = []
+          reject(res)
+        }else{
+          let subject = Decoder.convert(res.body)
+          let threads = subject.split('\n').filter((line, index, self)=>{
+            // 重複行を削除
+            return (self.indexOf(line) === index)
+          }).map((th)=>{
+            if(!th[1]) return false
+            if(UrlParser.isShitaraba(this.url)){
+              th = th.split(',')
+            }else{
+              th = th.split('<>')
+            }
+            return new Thread(UrlParser.getThreadUrl(this.url, th[0]), th[1])
+          }).filter((thread)=>{
+            // URLが空のスレッドを排除
+            return (thread.url)
+          })
+          res.body = this.threads = threads
+          resolve(res)
+        }
+      })
+    })
   }
 
 }
