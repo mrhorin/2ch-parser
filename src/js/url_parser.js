@@ -28,6 +28,18 @@ module.exports = class UrlParser{
     }
   }
 
+  // URLから板のURLを取得  
+  static getBoardUrl(url) {
+    let uri = this.convertUrl(url).split("/")
+    if (this.isShitaraba(url)) {
+      // .cgiが出現するクエリーの位置を探す
+      let cgiIndex = uri.findIndex((value) => { if (value.match(/^\w+\.cgi$/i)) return true })
+      let category = uri[cgiIndex + 1]
+      let boardNo = uri[cgiIndex + 2]
+      return `${uri[0]}/\/${uri[2]}/${category}/${boardNo}`
+    }
+  }
+
   // したらばのURLか
   static isShitaraba(url){
     return url.includes('jbbs.shitaraba.net')
