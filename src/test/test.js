@@ -4,13 +4,24 @@ import Board from 'js/board'
 import Thread from 'js/thread'
 import UrlParser from 'js/url_parser'
 
+const url = {
+  board: {
+    jbbs: 'http://jbbs.shitaraba.net/computer/10298',
+    sc: 'http://macaron.2ch.sc/reglement',
+    open: 'http://open.open2ch.net/open2ch'
+  },
+  thread: {
+    jbbs: 'http://jbbs.shitaraba.net/bbs/read.cgi/computer/10298/1108684328',
+    sc: 'http://macaron.2ch.sc/test/read.cgi/reglement/1397594191',
+    open: 'http://open.open2ch.net/test/read.cgi/open2ch/1365706412'
+  }
+}
+
 describe('Board', () => {
 
-  // したらば助け合い掲示板
-  const jbbs = new Board('http://jbbs.shitaraba.net/computer/10298/')    
-
   describe('#fetchThreads', () => {
-    it('statusCode is 200.', () => {
+    it('StatusCode is 200 in case of jbbs board URL.', () => {
+      var jbbs = new Board(url.board.jbbs)
       jbbs.fetchThreads((res) => {
         assert.equal(res.statusCode, 200)
         done()
@@ -20,20 +31,21 @@ describe('Board', () => {
 
 })
 
-describe('UrlParser', () => {
+describe('Thread', () => {
 
-  const url = {
-    board: {
-      jbbs: 'http://jbbs.shitaraba.net/computer/10298',
-      sc: 'http://macaron.2ch.sc/reglement',
-      open: 'http://open.open2ch.net/open2ch'
-    },
-    thread: {
-      jbbs: 'http://jbbs.shitaraba.net/bbs/read.cgi/computer/10298/1108684328',
-      sc: 'http://macaron.2ch.sc/test/read.cgi/reglement/1397594191',
-      open: 'http://open.open2ch.net/test/read.cgi/open2ch/1365706412'
-    }
-  }
+  describe('#fetchNewPosts', () => {
+    it('StatusCode is 200 in case of 2ch.sc thread URL.', () => {
+      var sc = new Thread(url.thread.sc)
+      sc.fetchNewPosts((res) => {
+        assert.equal(res.statusCode, 200)
+        done()
+      })
+    })
+  })
+
+})
+
+describe('UrlParser', () => {
 
   describe('#isShitaraba', () => {
     it(`${url.board.jbbs} is true.`, () => {
