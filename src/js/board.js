@@ -31,8 +31,10 @@ module.exports = class Board{
         if(res.statusCode>=300){
           res.body = []
           reject(res)
-        }else{
-          let subject = Decoder.convert(res.body)
+        } else {
+          // UTF-8に
+          const code = UrlParser.isShitaraba(this.url) ? 'EUC-JP' : 'Shift_JIS'
+          let subject = Decoder.convert(res.body, code)
           let threads = subject.split('\n').filter((line, index, self)=>{
             // 重複行を削除
             return (self.indexOf(line) === index)

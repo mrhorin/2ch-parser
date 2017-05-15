@@ -8,7 +8,8 @@ module.exports = class PostParser{
   // datファイルからPostリストを返す
   static parseDat(dat, threadUrl){
     // UTF-8に
-    dat = Decoder.convert(dat)
+    const code = UrlParser.isShitaraba(threadUrl) ? 'EUC-JP' : 'Shift_JIS'
+    dat = Decoder.convert(dat, code)
     return dat.split("\n").map((line)=>{
       return this.parseDatLine(line, threadUrl)
     }).filter((post)=>{

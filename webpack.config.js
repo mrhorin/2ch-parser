@@ -6,7 +6,7 @@ process.noDeprecation = true
 module.exports = {
   entry: {
     'index': './src/js/index.js',
-    'test': './src/js/test.js'
+    'test': './src/test/test.js'
   },
   target: 'node',
   output: {
