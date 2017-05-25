@@ -20,7 +20,7 @@ const url = {
 describe('Board', () => {
 
   describe('#fetchThreads', () => {
-    it('StatusCode is 200 in case of jbbs board URL.', () => {
+    it('StatusCode is 200 in case of jbbs board URL.', (done) => {
       var jbbs = new Board(url.board.jbbs)
       jbbs.fetchThreads((res) => {
         assert.equal(res.statusCode, 200)
@@ -34,10 +34,10 @@ describe('Board', () => {
 describe('Thread', () => {
 
   describe('#fetchNewPosts', () => {
-    it('StatusCode is 200 in case of 2ch.sc thread URL.', () => {
+    it('StatusCode is 200 in case of 2ch.sc thread URL.', (done) => {
       var sc = new Thread(url.thread.sc)
       sc.fetchNewPosts((res) => {
-        assert.equal(res.statusCode, 200)
+        assert.isTrue(res.statusCode==206 || res.statusCode==304, 'statuCode is 206 or 304')
         done()
       })
     })

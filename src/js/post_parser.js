@@ -34,14 +34,21 @@ module.exports = class PostParser{
         title: line[5],
         id: line[6]
       })
-    }else{
+    } else {
+      let id = line[2]
+      if (id.match(/ID:.+/)) {
+        id = id.match(/ID:.+/)[0]
+      } else if (id.match(/BE:.+/)) {
+        id = id.match(/BE:.+/)[0]
+      }
       return new Post({
+        no: "",
         name: line[0],
         mail: line[1],
-        date: line[2].replace(/\sID:.+/, ""),
+        date: line[2].replace(/\sID:.+/, "").replace(/\sBE:.+/, ""),
         body: line[3],
         title: line[4],
-        id: line[2].match(/ID:.+/)[0].replace(/^ID:/, "")
+        id: id
       })
     }
   }
