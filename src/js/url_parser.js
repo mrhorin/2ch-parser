@@ -42,6 +42,8 @@ module.exports = class UrlParser{
         // .cgiが含まれない時
         return this.convertUrl(url)
       }
+    } else {
+      return url
     }
   }
 
