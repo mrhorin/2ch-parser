@@ -1,5 +1,4 @@
 import iconv from 'iconv-lite'
-import jschardet from 'jschardet'
 
 import UrlParser from 'js/url_parser'
 
