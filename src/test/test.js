@@ -34,10 +34,18 @@ describe('Board', () => {
 describe('Thread', () => {
 
   describe('#fetchNewPosts', () => {
-    it('StatusCode is 200 in case of 2ch.sc thread URL.', (done) => {
+    it('StatusCode is 206 or 304 in case of 2ch.sc thread URL.', (done) => {
       var sc = new Thread(url.thread.sc)
       sc.fetchNewPosts((res) => {
         assert.isTrue(res.statusCode==206 || res.statusCode==304, 'statuCode is 206 or 304')
+        done()
+      })
+    })
+
+    it('StatusCode is 200 in case of shitaraba thread URL.', (done) => {
+      var jbbs = new Thread(url.thread.jbbs)
+      jbbs.fetchNewPosts((res) => {
+        assert.isTrue(res.statusCode==200, 'statuCode is 200')
         done()
       })
     })
