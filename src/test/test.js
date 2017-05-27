@@ -69,6 +69,22 @@ describe('Thread', () => {
         done()
       })
     })
+
+    it('StatusCode is 200 in case of open thread URL.', (done) => {
+      var jbbs = new Thread(url.thread.open)
+      jbbs.fetchAllPosts((res) => {
+        assert.equal(res.statusCode, 200)
+        done()
+      })
+    })
+
+    it('StatusCode is 200 in case of 2ch.sc thread URL.', (done) => {
+      var jbbs = new Thread(url.thread.sc)
+      jbbs.fetchAllPosts((res) => {
+        assert.equal(res.statusCode, 200)
+        done()
+      })
+    })
   })
 
   describe('#newPostsPromise', () => {
