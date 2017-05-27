@@ -19,10 +19,8 @@ module.exports = {
     extensions: ['.js'],
   },
   externals: [
-    'then-request',
-    'iconv-lite',
-    'jschardet',
     'superagent',
+    'superagent-charset',
   ],
   plugins: [
     new WebpackNotifierPlugin(),

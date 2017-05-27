@@ -28,7 +28,42 @@ describe('Board', () => {
         assert.equal(res.statusCode, 200)
         done()
       })
-    })  
+    })
+
+    it('StatusCode is 200 in case of 2ch.sc board URL.', (done) => {
+      var sc = new Board(url.board.sc)
+      sc.fetchThreads((res) => {
+        assert.equal(res.statusCode, 200)
+        done()
+      })
+    })    
+
+    it('StatusCode is 200 in case of open board URL.', (done) => {
+      var open = new Board(url.board.open)
+      open.fetchThreads((res) => {
+        assert.equal(res.statusCode, 200)
+        done()
+      })
+    })        
+
+    it('Error code is ENOTFOUND in case of invalid URL.', (done) => {
+      var invalid = new Board(url.board.invalid)
+      invalid.fetchThreads((res) => {
+        // The reson is that superagent don't resolve domain name.
+        assert.equal(res.code, 'ENOTFOUND')
+        done()
+      })
+    })
+  })
+
+  describe('#threadsPromise', () => {
+    it('Make it possible to catch ENOTFOUND on catch method when it receives invalid URL.', (done) => {
+      var invalid = new Board(url.board.invalid)
+      invalid.threadsPromise.catch((err) => {
+        assert.equal(err.code, 'ENOTFOUND')
+        done()
+      })
+    })
   })
 
 })
