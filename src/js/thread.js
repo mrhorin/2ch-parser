@@ -101,13 +101,13 @@ module.exports = class Thread{
               this._setPostsNo()
               this._setTitle()
               resolve(res)
-            }else if(res.statusCode == 304 || res.body.byteLength < 1){
+            }else if(res.statusCode == 304 || res.text.length < 1){
               // 新着レスなし
               res.body = []
               resolve(res)
             }else{
               res.body = []
-              reject(res)
+              resolve(res)
             }
           }
         }, (res)=>{ reject(res) })
@@ -144,7 +144,7 @@ module.exports = class Thread{
                 break
               default:
                 res.body = []
-                reject(res)
+                resolve(res)
                 break
              }
           }
