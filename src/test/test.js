@@ -8,12 +8,14 @@ const url = {
   board: {
     jbbs: 'http://jbbs.shitaraba.net/computer/10298',
     sc: 'http://macaron.2ch.sc/reglement',
-    open: 'http://open.open2ch.net/open2ch'
+    open: 'http://open.open2ch.net/open2ch',
+    invalid: 'http://epcviewer.xxx/xxxxx'
   },
   thread: {
     jbbs: 'http://jbbs.shitaraba.net/bbs/read.cgi/computer/10298/1108684328',
     sc: 'http://macaron.2ch.sc/test/read.cgi/reglement/1397594191',
-    open: 'http://open.open2ch.net/test/read.cgi/open2ch/1365706412'
+    open: 'http://open.open2ch.net/test/read.cgi/open2ch/1365706412',
+    invalid: 'http://epcviewer.xxx/test/read.cgi/xxxxx/7777777'
   }
 }
 
@@ -59,7 +61,7 @@ describe('Thread', () => {
     })
   })
 
-  describe('fetchAllPosts', () => {
+  describe('#fetchAllPosts', () => {
     it('StatusCode is 200 in case of shitaraba thread URL.', (done) => {
       var jbbs = new Thread(url.thread.jbbs)
       jbbs.fetchAllPosts((res) => {
@@ -79,7 +81,7 @@ describe('Thread', () => {
     })
 
     it('Error code is ENOTFOUND in case of invalid URL.', (done) => {
-      var invalid = new Thread("http://xxxxxxxxxxxxx.xxx.epcviewer")
+      var invalid = new Thread(url.thread.invalid)
       invalid.newPostsPromise.catch((err) => {
         // The reson is that superagent don't  resolve domain name
         assert.equal(err.code, 'ENOTFOUND')

@@ -43,8 +43,8 @@ module.exports = class Thread{
       request
         .get(this.datUrl)
         .charset(charCode)
-        .timeout(2000)
-        .then((err, res) => {
+        .timeout(5000)
+        .end((err, res) => {
           if (err) {
             reject(err)
           } else {
@@ -64,7 +64,7 @@ module.exports = class Thread{
                 break  
             }
           }    
-        }, (res)=>{ reject(res) })
+        })
     })
   }
 
@@ -88,7 +88,7 @@ module.exports = class Thread{
       request
         .get(reqUrl)
         .charset('euc-jp')
-        .timeout(2000)
+        .timeout(5000)
         .end((err, res) => {
           if (err) {
             reject(err)
@@ -120,7 +120,7 @@ module.exports = class Thread{
       request
         .get(this.datUrl)
         .charset('shift_jis')
-        .timeout(2000)
+        .timeout(5000)
         .set({ 'If-Modified-Since': this.headers.lastMofied, 'Range': `bytes=${this.headers.contentLength}-` })
         .end((err, res) => {
           if (err) {
