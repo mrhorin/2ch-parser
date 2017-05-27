@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - 4
+  - 5
+  - 6
+  - 7
+  - node
+install:
+  - yarn install
+  - npm i -g gulp
+  - npm i -g webpack
+  - npm i -g mocha
+dist: trusty
+sudo: false
+cache: yarn
+script:
+  - yarn run build
+  - yarn run test
