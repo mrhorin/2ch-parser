@@ -35,9 +35,9 @@ describe('Thread', () => {
 
   describe('#fetchNewPosts', () => {
     it('StatusCode is 200 in case of shitaraba thread URL.', (done) => {
-      var jbbs = new Thread("http://jbbs.shitaraba.net/bbs/read.cgi/internet/22724/1495859179/")
+      var jbbs = new Thread(url.thread.jbbs)
       jbbs.fetchNewPosts((res) => {
-        assert.isTrue(true, 'statuCode is 200')
+        assert.isTrue(res.statusCode==200, 'statuCode is 200')
         done()
       })
     })
@@ -54,6 +54,16 @@ describe('Thread', () => {
       var jbbs = new Thread(url.thread.jbbs)
       jbbs.fetchNewPosts((res) => {
         assert.isTrue(res.statusCode==200, 'statuCode is 200')
+        done()
+      })
+    })
+  })
+
+  describe('fetchAllPosts', () => {
+    it('StatusCode is 200 in case of shitaraba thread URL.', (done) => {
+      var jbbs = new Thread(url.thread.jbbs)
+      jbbs.fetchAllPosts((res) => {
+        assert.equal(res.statusCode, 200)
         done()
       })
     })
@@ -81,41 +91,41 @@ describe('Thread', () => {
 
 })
 
-// describe('UrlParser', () => {
+describe('UrlParser', () => {
 
-//   describe('#isShitaraba', () => {
-//     it(`${url.board.jbbs} is true.`, () => {
-//       assert.isOk(UrlParser.isShitaraba(url.board.jbbs), `${url.board.jbbs} is ok.`)
-//     })
+  describe('#isShitaraba', () => {
+    it(`${url.board.jbbs} is true.`, () => {
+      assert.isOk(UrlParser.isShitaraba(url.board.jbbs), `${url.board.jbbs} is ok.`)
+    })
 
-//     it(`${url.thread.jbbs} is true.`, () => {
-//       assert.isOk(UrlParser.isShitaraba(url.thread.jbbs), `${url.thread.jbbs} is ok.`)
-//     })
+    it(`${url.thread.jbbs} is true.`, () => {
+      assert.isOk(UrlParser.isShitaraba(url.thread.jbbs), `${url.thread.jbbs} is ok.`)
+    })
 
-//     it(`${url.board.sc} is false.`, () => {
-//       assert.isNotOk(UrlParser.isShitaraba(url.board.sc), `${url.board.sc} will fail.`)
-//     })    
-//   })
+    it(`${url.board.sc} is false.`, () => {
+      assert.isNotOk(UrlParser.isShitaraba(url.board.sc), `${url.board.sc} will fail.`)
+    })    
+  })
 
-//   describe('#getBoardUrl', () => {
-//     it(`In case of ${url.thread.jbbs} returns ${url.board.jbbs}.`, () => {
-//       assert.equal(UrlParser.getBoardUrl(url.thread.jbbs), url.board.jbbs)
-//     })
-//   })
+  describe('#getBoardUrl', () => {
+    it(`In case of ${url.thread.jbbs} returns ${url.board.jbbs}.`, () => {
+      assert.equal(UrlParser.getBoardUrl(url.thread.jbbs), url.board.jbbs)
+    })
+  })
 
-//   describe('#getThreadUrl', () => {
-//     it(`In case of ${url.board.jbbs} returns ${url.thread.jbbs}`, () => {
-//       assert.equal(UrlParser.getThreadUrl(url.board.jbbs, '1108684328'), url.thread.jbbs)
-//     })
+  describe('#getThreadUrl', () => {
+    it(`In case of ${url.board.jbbs} returns ${url.thread.jbbs}`, () => {
+      assert.equal(UrlParser.getThreadUrl(url.board.jbbs, '1108684328'), url.thread.jbbs)
+    })
 
-//     it(`In case of ${url.board.open}/ returns ${url.thread.open}`, () => {
-//       assert.equal(UrlParser.getThreadUrl(url.board.open+'/', '1365706412'), url.thread.open)
-//     })
+    it(`In case of ${url.board.open}/ returns ${url.thread.open}`, () => {
+      assert.equal(UrlParser.getThreadUrl(url.board.open+'/', '1365706412'), url.thread.open)
+    })
 
-//     it(`In case of ${url.board.sc}/l50 returns ${url.thread.sc}`, () => {
-//       assert.equal(UrlParser.getThreadUrl(url.board.sc+'/l50', '1397594191'), url.thread.sc)
-//     })    
-//   })
+    it(`In case of ${url.board.sc}/l50 returns ${url.thread.sc}`, () => {
+      assert.equal(UrlParser.getThreadUrl(url.board.sc+'/l50', '1397594191'), url.thread.sc)
+    })    
+  })
 
-// })
+})
 

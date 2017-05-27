@@ -37,23 +37,34 @@ module.exports = class Thread{
   }
 
   // 全レスを取得するプロミスを返す
-  get allPostsPromise(){
+  get allPostsPromise() {
     return new Promise((resolve, reject)=>{
-      request('GET', this.datUrl, { timeout: 15000 }).done((res)=>{
-        res.url = this.datUrl
-        if(res.statusCode==200){
-          // レスポンスヘッダ保存
-          this.headers.lastMofied = res.headers['last-modified']
-          this.headers.contentLength = Number(res.headers['content-length'])
-          this.posts = res.body = PostParser.parseDat(res.body, this.url)
-          this._setPostsNo()
-          this._setTitle()
-          resolve(res)
-        }else{
-          res.body = []
-          resolve(res)
-        }
-      })
+      const charCode = UrlParser.isShitaraba(this.url) ? 'EUC-JP' : 'Shift_JIS'
+      request
+        .get(this.datUrl)
+        .charset(charCode)
+        .timeout(2000)
+        .then((err, res) => {
+          if (err) {
+            reject(err)
+          } else {
+            switch (res.statusCode) {
+              case 200:
+                // レスポンスヘッダ保存
+                this.headers.lastMofied = res.headers['last-modified']
+                this.headers.contentLength = Number(res.headers['content-length'])
+                this.posts = res.body = this._parseDat(res.text)
+                this._setPostsNo()
+                this._setTitle()
+                resolve(res)                
+                break
+              default:
+                res.body = []
+                resolve(res)
+                break  
+            }
+          }    
+        }, (res)=>{ reject(res) })
     })
   }
 
