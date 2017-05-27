@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "iconv-lite": "^0.4.15",
+    "superagent": "^3.5.2",
+    "superagent-charset": "^1.2.0",
     "then-request": "^2.2.0"
   }
 }

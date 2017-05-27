@@ -22,6 +22,7 @@ module.exports = {
     'then-request',
     'iconv-lite',
     'jschardet',
+    'superagent',
   ],
   plugins: [
     new WebpackNotifierPlugin(),
