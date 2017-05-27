@@ -89,7 +89,7 @@ module.exports = class Thread{
         .get(reqUrl)
         .charset('euc-jp')
         .timeout(2000)
-        .then((err, res) => {
+        .end((err, res) => {
           if (err) {
             reject(err)
           } else {
@@ -110,7 +110,7 @@ module.exports = class Thread{
               resolve(res)
             }
           }
-        }, (res)=>{ reject(res) })
+        })
     })
   }
 

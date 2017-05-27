@@ -70,6 +70,14 @@ describe('Thread', () => {
   })
 
   describe('#newPostsPromise', () => {
+    it('Status code is 200 in resolve block in case of shitaraba thread URL.', (done) => {
+      var jbbs = new Thread(url.thread.jbbs)
+      jbbs.newPostsPromise.then((res) => {
+        assert.equal(res.statusCode, 200)
+        done()
+      })
+    })
+
     it('Error code is ENOTFOUND in case of invalid URL.', (done) => {
       var invalid = new Thread("http://xxxxxxxxxxxxx.xxx.epcviewer")
       invalid.newPostsPromise.catch((err) => {
