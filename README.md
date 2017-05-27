@@ -1,8 +1,12 @@
 # 2ch-parser
+[![Build Status](https://travis-ci.org/mrhorin/2ch-parser.svg?branch=master)](https://travis-ci.org/mrhorin/2ch-parser)
+[![npm version](https://badge.fury.io/js/stylestats.svg)](https://badge.fury.io/js/stylestats)
+
+
 This module is parser for 2ch which is most famous BBS in Japan.
 
 ## Support
-it supports some BBS compatible with 2ch, but doesn't support 2ch.net.
+This module supports some BBS compatible with 2ch, but doesn't support 2ch.net.
 - 2ch.sc
 - open2ch.net
 - jbbs.shitaraba.net
@@ -14,30 +18,29 @@ npm install 2ch-parser
 ```
 
 ## Usage
-If you want to get threads list from board URL, it insert into Board object, then return threads array.
+This is example that gets threads list and posts list.
 ```javascript
-import {Board} from '2ch-parser'
+import { Board } from '2ch-parser'
 
-var tech = new Board("http://toro.2ch.sc/tech/")
-var threads = tech.fetchThreads()
+var board = new Board("http://toro.2ch.sc/tech/")
+
+board.fetchThreads((res) => {
+  /*  show threads list. */
+  console.log(res.body)
+  console.log(board.threads)
+})
 ```
 
-If you want to get posts list from thread URL, it insert into Thread object, then return posts array.
 ```javascript
-import {Thread} from '2ch-parser'
+import { Thread } from '2ch-parser'
 
-var bbs = new Thread("http://toro.2ch.sc/test/read.cgi/tech/9990000001/")
-var posts = bbs.fetchAllPosts()
-```
+var thread = new Thread("http://toro.2ch.sc/test/read.cgi/tech/123456789/")
 
-If you want to also get new arrived posts after get posts in Thread, you should use fetchNewPosts function.
-```javascript
-import {Thread} from '2ch-parser'
-
-var bbs = new Thread("http://toro.2ch.sc/test/read.cgi/tech/9990000001/")
-var posts = bbs.fetchAllPosts()
-
-var newPosts = bbs.fetchNewPosts()
+thread.fetchAllPosts((res)=>{
+  /*  show posts list. */
+  console.log(res.body)
+  console.log(thread.posts)
+})
 ```
 
 ## License
