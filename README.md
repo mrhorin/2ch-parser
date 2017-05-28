@@ -1,7 +1,6 @@
 # 2ch-parser
 [![Build Status](https://travis-ci.org/mrhorin/2ch-parser.svg?branch=master)](https://travis-ci.org/mrhorin/2ch-parser)
-[![npm version](https://badge.fury.io/js/stylestats.svg)](https://badge.fury.io/js/stylestats)
-
+[![npm version](https://badge.fury.io/js/2ch-parser.svg)](https://badge.fury.io/js/2ch-parser)
 
 This module is parser for 2ch which is most famous BBS in Japan.
 
