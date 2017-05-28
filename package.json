@@ -6,6 +6,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "mocha ./lib/test.js",
+    "test:server": "mocha ./lib/server-test.js",
     "watch": "webpack --watch",
     "build": "webpack"
   },
