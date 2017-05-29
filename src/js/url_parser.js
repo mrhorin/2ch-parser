@@ -49,7 +49,7 @@ module.exports = class UrlParser{
 
   // したらばのURLか
   static isShitaraba(url){
-    return url.includes('jbbs.shitaraba.net')
+    return url.includes('jbbs.')
   }
 
   // URLの末尾の/を削除して返す
