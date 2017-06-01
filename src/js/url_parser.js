@@ -43,13 +43,23 @@ module.exports = class UrlParser{
         return this.convertUrl(url)
       }
     } else {
-      return url
+      let cgiIndex = uri.findIndex((value) => { if (value.match(/^\w+\.cgi$/i)) return true })
+      if (cgiIndex >= 0) {
+        return `${uri[0]}/\/${uri[cgiIndex-2]}/${uri[cgiIndex+1]}`
+      } else {
+        return this.convertUrl(url)
+      }
     }
   }
 
   // したらばのURLか
   static isShitaraba(url){
     return url.includes('jbbs.')
+  }
+
+  // 2ch.scのURLか  
+  static isSc(url) {
+    return url.includes('2ch.sc')
   }
 
   // URLの末尾の/を削除して返す

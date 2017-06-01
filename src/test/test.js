@@ -44,6 +44,10 @@ describe('UrlParser', () => {
       assert.equal(UrlParser.getBoardUrl(url.thread.jbbs), url.board.jbbs)
     })
 
+    it(`In case of ${url.thread.sc} returns ${url.board.sc}.`, () => {
+      assert.equal(UrlParser.getBoardUrl(url.thread.sc), url.board.sc)
+    })
+
     it(`In case of ${url.thread.livedoor} returns ${url.board.jbbs}.`, () => {
       assert.equal(UrlParser.getBoardUrl(url.thread.livedoor), url.board.livedoor)
     })
