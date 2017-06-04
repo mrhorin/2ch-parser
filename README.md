@@ -17,8 +17,8 @@ npm install 2ch-parser
 ```
 
 ## Documentation
-- [Japanese](https://github.com/mrhorin/2ch-parser/docs/jp)
-- [English](https://github.com/mrhorin/2ch-parser/docs/en)
+- [Japanese](https://github.com/mrhorin/2ch-parser/tree/master/docs/jp)
+- [English](https://github.com/mrhorin/2ch-parser/tree/master/docs/en)
 
 ## Usage
 This is example that gets threads list and posts list.
