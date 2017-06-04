@@ -6,15 +6,19 @@ This module is parser for 2ch which is most famous BBS in Japan.
 
 ## Support
 This module supports some BBS compatible with 2ch, but doesn't support 2ch.net.
-- 2ch.sc
-- open2ch.net
-- jbbs.shitaraba.net
+- [2ch.sc](http://2ch.sc/)
+- [jbbs.shitaraba.net](http://rentalbbs.shitaraba.com/)
+- [open2ch.net](http://open2ch.net/)
 
 ## Installation
 Install with npm.
 ```
 npm install 2ch-parser
 ```
+
+## Documentation
+- [Japanese](https://github.com/mrhorin/2ch-parser/docs/jp)
+- [English](https://github.com/mrhorin/2ch-parser/docs/en)
 
 ## Usage
 This is example that gets threads list and posts list.
