@@ -36,6 +36,22 @@ module.exports = class Thread{
     })
   }
 
+  // JSON形式で取得  
+  get toJson() {
+    return JSON.stringify({
+      title: this.title,
+      url: this.url,
+      datUrl: this.datUrl,
+      headers: this.headers,
+      posts: this.posts
+    })
+  }
+
+  // postsをJSON形式で取得  
+  get postsToJson() {
+    return JSON.stringify(this.posts)
+  }
+
   // 全レスを取得するプロミスを返す
   get allPostsPromise() {
     return new Promise((resolve, reject)=>{
