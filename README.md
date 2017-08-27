@@ -6,7 +6,7 @@ This module is parser for 2ch which is most famous BBS in Japan.
 
 ## Support
 This module supports some BBS compatible with 2ch, but doesn't support 2ch.net.
-- [2ch.sc](http://2ch.sc/)
+- [2ch.sc](http://2ch.sc/)
 - [jbbs.shitaraba.net](http://rentalbbs.shitaraba.com/)
 - [open2ch.net](http://open2ch.net/)
 
