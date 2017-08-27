@@ -1,7 +1,7 @@
 このドキュメントはすべてES6で記述されています。  
 
 動作確認済み
-- [２ちゃんねる(2ch.sc)](http://2ch.sc/)
+- [２ちゃんねる(2ch.sc)](http://2ch.sc/)
 - [したらば掲示板](http://rentalbbs.shitaraba.com/)
 - [おーぷん2ちゃんねる](http://open2ch.net/)
 
