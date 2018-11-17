@@ -7,8 +7,9 @@ import Thread from 'js/thread'
 // 板
 module.exports = class Board{
 
-  constructor(url){
+  constructor(url, title = "") {
     this.url = url
+    this.title = title
     this.subjectUrl = UrlParser.getSubjectUrl(this.url)
     this.threads = []
   }
