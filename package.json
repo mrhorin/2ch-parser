@@ -1,6 +1,6 @@
 {
   "name": "2ch-parser",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "homepage": "https://github.com/mrhorin/2ch-parser",
   "description": "This module is a parser for 2ch which is most famous BBS in Japan.",
   "main": "./lib/index.js",
@@ -10,7 +10,7 @@
     "watch": "webpack --watch",
     "build": "webpack"
   },
-  "author": "mrhorin <u0813mb@gmail.com>",
+  "author": "mrhorin <oniyaman@outlook.com>",
   "license": "GPL-2.0",
   "devDependencies": {
     "babel-core": "^6.24.0",
