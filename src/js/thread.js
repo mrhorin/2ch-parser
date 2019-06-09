@@ -213,7 +213,7 @@ export default class Thread{
   _setPostsNo(){
     if(!UrlParser.isShitaraba(this.url)){
       this.posts = this.posts.map((post, index)=>{
-        post.no = index
+        post.no = Number(index) + 1
         return post
       })
     }
