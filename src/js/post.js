@@ -1,5 +1,5 @@
 // 書き込み
-module.exports = class Post{
+export default class Post{
 
   constructor(hash){
     this.no = Number(hash.no)

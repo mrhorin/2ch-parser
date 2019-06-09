@@ -5,7 +5,7 @@ import UrlParser from 'js/url_parser'
 import Post from 'js/post.js'
 
 // スレッド
-module.exports = class Thread{
+export default class Thread{
 
   constructor(url, title=""){
     this.title = title

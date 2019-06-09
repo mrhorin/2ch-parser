@@ -5,7 +5,7 @@ import UrlParser from 'js/url_parser'
 import Thread from 'js/thread'
 
 // 板
-module.exports = class Board{
+export default class Board{
 
   constructor(url, title = "") {
     this.url = url

@@ -4,6 +4,7 @@ const WebpackNotifierPlugin = require('webpack-notifier')
 process.noDeprecation = true
 
 module.exports = {
+  mode: "production",
   entry: {
     'index': './src/js/index.js',
     'test': './src/test/test.js',
@@ -27,14 +28,16 @@ module.exports = {
     new WebpackNotifierPlugin(),
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
-        }
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          }
+        },
       },
     ]
   }

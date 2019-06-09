@@ -1,5 +1,5 @@
 // 掲示板仕様ごとのURLにパースするクラス
-module.exports = class UrlParser{
+export default class UrlParser{
 
   // subject.txtのURLを返す
   static getSubjectUrl(boardUrl){
