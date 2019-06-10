@@ -195,6 +195,8 @@ export default class Thread{
           id = id.match(/ID:.+/)[0]
         } else if (id.match(/BE:.+/)) {
           id = id.match(/BE:.+/)[0]
+        } else {
+          id = ""
         }
         return new Post({
           no: "",
