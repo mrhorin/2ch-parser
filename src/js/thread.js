@@ -107,8 +107,9 @@ export default class Thread{
         .charset('euc-jp')
         .timeout(5000)
         .buffer()
+        .set({ 'If-Modified-Since': this.headers.lastModified })
         .end((err, res) => {
-          if (err) {
+          if ((err && !(res)) || (err && res.statusCode !== 304)) {
             reject(err)
           } else {
             if(res.statusCode==200 && res.text.length>0){
