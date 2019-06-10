@@ -12,7 +12,7 @@ export default class Thread{
     this.url = url
     this.datUrl = UrlParser.getDatUrl(this.url)
     this.headers = {
-      lastMofied: "",
+      lastModified: "",
       contentLength: 0,
     }
     this.posts = []
@@ -68,7 +68,7 @@ export default class Thread{
             switch (res.statusCode) {
               case 200:
                 // レスポンスヘッダ保存
-                this.headers.lastMofied = res.headers['last-modified']
+                this.headers.lastModified = res.headers['last-modified']
                 this.headers.contentLength = Number(res.headers['content-length'])
                 this.posts = res.body = this._parseDat(res.text)
                 this._setPostsNo()
@@ -112,7 +112,7 @@ export default class Thread{
             reject(err)
           } else {
             if(res.statusCode==200 && res.text.length>0){
-              this.headers.lastMofied = res.headers['last-modified']
+              this.headers.lastModified = res.headers['last-modified']
               this.headers.contentLength += Number(res.headers['content-length'])
               res.body = this._parseDat(res.text)
               this.posts = this.posts.concat(res.body)
@@ -140,7 +140,7 @@ export default class Thread{
         .charset('shift_jis')
         .timeout(5000)
         .buffer()
-        .set({ 'If-Modified-Since': this.headers.lastMofied })
+        .set({ 'If-Modified-Since': this.headers.lastModified })
         .end((err, res) => {
           if ((err && !(res)) || (err && res.statusCode !== 304)) {
             reject(err)
@@ -148,7 +148,7 @@ export default class Thread{
             switch (res.statusCode) {
               case 200:
                 // Partial Content  
-                this.headers.lastMofied = res.headers['last-modified']
+                this.headers.lastModified = res.headers['last-modified']
                 this.headers.contentLength += Number(res.headers['content-length'])
                 this.posts = res.body = this._parseDat(res.text)
                 this._setPostsNo()
