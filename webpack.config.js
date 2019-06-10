@@ -21,8 +21,9 @@ module.exports = {
     extensions: ['.js'],
   },
   externals: [
-    'superagent',
-    'superagent-charset',
+    {
+      formidable: 'commonjs crypto',
+    },
   ],
   plugins: [
     new WebpackNotifierPlugin(),

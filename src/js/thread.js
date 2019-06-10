@@ -60,6 +60,7 @@ export default class Thread{
         .get(this.datUrl)
         .charset(charCode)
         .timeout(5000)
+        .buffer()
         .end((err, res) => {
           if (err) {
             reject(err)
@@ -105,6 +106,7 @@ export default class Thread{
         .get(reqUrl)
         .charset('euc-jp')
         .timeout(5000)
+        .buffer()
         .end((err, res) => {
           if (err) {
             reject(err)
@@ -137,6 +139,7 @@ export default class Thread{
         .get(this.datUrl)
         .charset('shift_jis')
         .timeout(5000)
+        .buffer()
         .set({ 'If-Modified-Since': this.headers.lastMofied, 'Range': `bytes=${this.headers.contentLength}-` })
         .end((err, res) => {
           if (err) {

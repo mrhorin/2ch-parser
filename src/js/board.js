@@ -31,6 +31,7 @@ export default class Board{
         .get(this.subjectUrl)
         .charset(charCode)
         .timeout(5000)
+        .buffer()
         .end((err, res) => {
           if (err) {
             reject(err)
