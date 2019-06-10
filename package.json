@@ -1,6 +1,6 @@
 {
   "name": "2ch-parser",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "homepage": "https://github.com/mrhorin/2ch-parser",
   "description": "This module is a parser for 2ch, the most famous BBS in Japan.",
   "main": "./lib/index.js",
