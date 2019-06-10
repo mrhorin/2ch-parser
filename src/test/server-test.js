@@ -81,10 +81,10 @@ describe('Thread', () => {
       })
     })
 
-    it('StatusCode is 206 or 304 in case of 2ch.sc thread URL.', (done) => {
+    it('StatusCode is 200 or 304 in case of 2ch.sc thread URL.', (done) => {
       var sc = new Thread(url.thread.sc)
       sc.fetchNewPosts((res) => {
-        assert.isTrue(res.statusCode==206 || res.statusCode==304, 'statuCode is 206 or 304')
+        assert.isTrue(res.statusCode==200 || res.statusCode==304, 'statuCode is 200 or 304')
         done()
       })
     })
@@ -136,7 +136,7 @@ describe('Thread', () => {
     it('Error code is ENOTFOUND in case of invalid URL.', (done) => {
       var invalid = new Thread(url.thread.invalid)
       invalid.newPostsPromise.catch((err) => {
-        // The reson is that superagent don't  resolve domain name
+        // The reson is that superagent don't resolve domain name
         assert.equal(err.code, 'ENOTFOUND')
         done()
       })

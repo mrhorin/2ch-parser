@@ -22,8 +22,8 @@ export default class Thread{
   fetchAllPosts(callback=()=>{}){
     this.allPostsPromise.then((res)=>{
       callback(res)
-    }).catch((res)=>{
-      callback(res)
+    }).catch((err)=>{
+      callback(err)
     })
   }
 
@@ -31,8 +31,8 @@ export default class Thread{
   fetchNewPosts(callback=()=>{}){
     this.newPostsPromise.then((res)=>{
       callback(res)
-    }).catch((res)=>{
-      callback(res)
+    }).catch((err) => {
+      callback(err)
     })
   }
 
@@ -90,7 +90,7 @@ export default class Thread{
     return UrlParser.isShitaraba(this.url) ? (
       this._getNewPostsFromShitarabaPromise()
     ) : (
-      this._getNewPostsByRangePromise()
+      this._getNewPostsPromise()
     )
   }
 
@@ -132,26 +132,25 @@ export default class Thread{
     })
   }
 
-  // 新着レスを取得するプロミスを返す(Rangeリクエスト用)
-  _getNewPostsByRangePromise(){
+  // 新着レスを取得するプロミスを返す
+  _getNewPostsPromise() {
     return new Promise((resolve, reject) => {
       request
         .get(this.datUrl)
         .charset('shift_jis')
         .timeout(5000)
         .buffer()
-        .set({ 'If-Modified-Since': this.headers.lastMofied, 'Range': `bytes=${this.headers.contentLength}-` })
+        .set({ 'If-Modified-Since': this.headers.lastMofied })
         .end((err, res) => {
-          if (err) {
+          if ((err && !(res)) || (err && res.statusCode !== 304)) {
             reject(err)
           } else {
             switch (res.statusCode) {
-              case 206:
+              case 200:
                 // Partial Content  
                 this.headers.lastMofied = res.headers['last-modified']
                 this.headers.contentLength += Number(res.headers['content-length'])
-                res.body = this._parseDat(res.text)
-                this.posts = this.posts.concat(res.body)
+                this.posts = res.body = this._parseDat(res.text)
                 this._setPostsNo()
                 this._setTitle()
                 resolve(res)
@@ -165,8 +164,9 @@ export default class Thread{
                 res.body = []
                 resolve(res)
                 break
-             }
+            }
           }
+          
         })
     })
   }
