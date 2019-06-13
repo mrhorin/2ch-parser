@@ -50,9 +50,9 @@ describe('Board', () => {
 
     it('Error code is ENOTFOUND in case of invalid URL.', (done) => {
       var invalid = new Board(url.board.invalid)
-      invalid.fetchThreads((res) => {
+      invalid.fetchThreads((res, err) => {
         // The reson is that superagent don't resolve domain name.
-        assert.equal(res.code, 'ENOTFOUND')
+        assert.equal(err.code, 'ENOTFOUND')
         done()
       })
     })

@@ -17,9 +17,9 @@ export default class Board{
   // スレッド一覧を取得
   fetchThreads(callback=()=>{}){
     this.threadsPromise.then((res)=>{
-      callback(res)
-    }).catch((res)=>{
-      callback(res)
+      callback(res, undefined)
+    }).catch((err)=>{
+      callback(undefined ,err)
     })
   }
 

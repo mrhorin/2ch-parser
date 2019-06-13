@@ -21,18 +21,18 @@ export default class Thread{
   // 全レスを取得
   fetchAllPosts(callback=()=>{}){
     this.allPostsPromise.then((res)=>{
-      callback(res)
+      callback(res, undefined)
     }).catch((err)=>{
-      callback(err)
+      callback(undefined, err)
     })
   }
 
   // 新着レスを取得
   fetchNewPosts(callback=()=>{}){
     this.newPostsPromise.then((res)=>{
-      callback(res)
+      callback(res, undefined)
     }).catch((err) => {
-      callback(err)
+      callback(undefined, err)
     })
   }
 
@@ -76,8 +76,7 @@ export default class Thread{
                 resolve(res)                
                 break
               default:
-                res.body = []
-                resolve(res)
+                reject(err)
                 break  
             }
           }    
@@ -125,8 +124,7 @@ export default class Thread{
               res.body = []
               resolve(res)
             }else{
-              res.body = []
-              resolve(res)
+              reject(err)
             }
           }
         })
@@ -162,8 +160,7 @@ export default class Thread{
                 resolve(res)
                 break
               default:
-                res.body = []
-                resolve(res)
+                reject(err)
                 break
             }
           }
